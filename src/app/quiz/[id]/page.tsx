@@ -5,14 +5,13 @@ import Question from "@/components/Question";
 import { IQuestion } from "@/constants/questions";
 import useQuestions from "@/hooks/useQuestions";
 import { useCallback, useMemo, useState } from "react";
-import { Check, X } from "lucide-react"
-
-interface QuestionsProps {
+import QuizResults from "@/components/QuizResults";
+interface IQuestionsProps {
   questions: IQuestion[]
   handleSelect: (index: number, selected: string) => void
 }
 
-const Questions = ({ questions, handleSelect }: QuestionsProps) => {
+const Questions = ({ questions, handleSelect }: IQuestionsProps) => {
   return (
     questions.map((q, i) =>
       <Question
@@ -29,7 +28,6 @@ export default function Quiz() {
   const { questions } = useQuestions<IQuestion>()
   // TODO: make sure this should align with the questions length
   const [answers, setAnswers] = useState<string[]>(Array(5).fill(""))
-  const [score, setScore] = useState<number>(0)
   const [submitted, setSubmitted] = useState<boolean>(false)
   const correctAnswers = questions.map((q) => q.answer)
 
@@ -40,12 +38,8 @@ export default function Quiz() {
   }, [answers])
 
   const handleSubmit = useCallback(() => {
-    const score = answers.reduce((count, answer, i) => {
-      return answer === correctAnswers[i] ? count + 1 : count
-    }, 0)
-    setScore(score)
     setSubmitted(true)
-  }, [answers, questions])
+  }, [])
   const allAnswered = useMemo(() =>  answers.every((a) => a !== ""), [answers])
 
   if (!questions) {
@@ -55,14 +49,24 @@ export default function Quiz() {
   return (
     <div className="w-full flex justify-center py-8">
       <div className="w-full max-w-xl space-y-6">
-        <Questions handleSelect={handleSelect} questions={questions} />
-        <Button
-          className="w-full mt-2"
-          onClick={handleSubmit}
-          disabled={!allAnswered}
-        >
-          Submit
-        </Button>
+        {submitted ? (
+           <QuizResults
+            questions={questions}
+            answers={answers}
+            correctAnswers={correctAnswers}
+          />
+        ) : (
+          <>
+            <Questions handleSelect={handleSelect} questions={questions} />
+            <Button
+              className="w-full mt-2"
+              onClick={handleSubmit}
+              disabled={!allAnswered}
+            >
+              Submit
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )

@@ -1,37 +1,28 @@
 
-// should move to components/ScoreSummary.tsx
 import { Button } from "@/components/ui/button"
-
-interface ScoreSummaryProps {
-  score: number
-  total: number
-  onRetry: () => void
-}
-
-// components/QuizResults.tsx
 import { Card, CardContent } from "@/components/ui/card"
+import { IQuestion } from "@/constants/questions"
 import { Check, X } from "lucide-react"
 
-interface Question {
-  question: string
-  options: string[]
+interface IScoreSummaryProps {
+  score: number
+  total: number
 }
 
-interface QuizResultsProps {
-  questions: Question[]
+interface IQuizResultsProps {
+  questions: IQuestion[]
   answers: string[]
   correctAnswers: string[]
-  onRetry: () => void
 }
 
-
-function ScoreSummary({ score, total, onRetry }: ScoreSummaryProps) {
+// TODO: move to components/ScoreSummary
+function ScoreSummary({ score, total }: IScoreSummaryProps) {
   return (
     <div className="text-center space-y-4">
       <h2 className="text-xl font-bold">
         You scored {score} out of {total}
       </h2>
-      <Button onClick={onRetry}>Try Again</Button>
+      <Button>Go back</Button>
     </div>
   )
 }
@@ -40,8 +31,7 @@ export default function QuizResults({
   questions,
   answers,
   correctAnswers,
-  onRetry,
-}: QuizResultsProps) {
+}: IQuizResultsProps) {
   const score = answers.reduce((total, answer, i) =>
     answer === correctAnswers[i] ? total + 1 : total, 0)
 
@@ -57,7 +47,7 @@ export default function QuizResults({
               <h2 className="text-lg font-semibold">{q.question}</h2>
 
               <div className="space-y-2">
-                {q.options.map((option) => {
+                {q.choices.map((option) => {
                   const isCorrect = option === correct
                   const isSelected = option === selected
                   const statusIcon = isSelected
@@ -94,7 +84,7 @@ export default function QuizResults({
         )
       })}
 
-      <ScoreSummary score={score} total={questions.length} onRetry={onRetry} />
+      <ScoreSummary score={score} total={questions.length} />
     </div>
   )
 }
