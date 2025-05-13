@@ -14,7 +14,7 @@ export async function extractText(file: File): Promise<IExtractResult> {
 
   const pages: string[] = [];
 
-  if (pdf.numPages > 3) {
+  if (pdf.numPages > 10) {
     return { error: 'PDF must have  less than 3 pages.', pages: []}
   }
 
