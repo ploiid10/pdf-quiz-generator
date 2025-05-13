@@ -46,12 +46,7 @@ export default function Home() {
       {loading
         ? <LoadingSpinner />
         : (
-          <>
-            <InputFile onFileSelected={handleFileUpload} />
-            <Button asChild>
-              <Link href="/quiz/12312">go to quiz</Link>
-            </Button>
-          </>
+          <InputFile onFileSelected={handleFileUpload} />
       )}
     </div>
   );

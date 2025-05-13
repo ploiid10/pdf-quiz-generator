@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { IQuestion } from "@/constants/questions"
 import { Check, X } from "lucide-react"
+import Link from "next/link"
 
 interface IScoreSummaryProps {
   score: number
@@ -22,7 +23,9 @@ function ScoreSummary({ score, total }: IScoreSummaryProps) {
       <h2 className="text-xl font-bold">
         You scored {score} out of {total}
       </h2>
-      <Button>Go back</Button>
+      <Button asChild>
+        <Link href="/">Generate Questions</Link>   
+      </Button>
     </div>
   )
 }
