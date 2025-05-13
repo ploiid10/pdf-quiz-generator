@@ -1,11 +1,9 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
 import { InputFile } from "@/components/InputFile";
 import { LoadingSpinner } from "@/components/ui/spinner";
 import { IQuestion } from "@/constants/questions";
 import { generateQuestions, saveQuestion } from "@/lib/questions";
-import Link from "next/link"
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ErrorAlert from "@/components/ErrorAlert";
