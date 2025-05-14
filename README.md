@@ -1,3 +1,8 @@
+# How to run
+create `.env` file and add variable with its value or directly update `envConfig.ts` to set the OPENAI API KEY
+- NEXT_PUBLIC_OPENAI_KEY=
+
+
 # PDF Quiz Generator - Take-Home Assignment
 
 ## Challenge Overview
